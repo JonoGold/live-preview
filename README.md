@@ -487,6 +487,40 @@ export default function Hero({ contentful_id, ...props }) {
 
 That's it! You should now be able to use the Contentful live preview SDK with Gatsby.
 
+To use with renderRichText you can listen to the changes made and then stringify the content to pass back in to `renderRichText`
+
+```
+export default function Hero({ contentful_id, ...props }) {
+  import { renderRichText } from "gatsby-source-contentful/rich-text"
+
+  const data = useContentfulLiveUpdates({
+    ...props,
+    sys: { id: props.contentful_id },
+  })
+
+  const [content, setContent] = useState(data.content)
+
+  useEffect(() => {
+    let updatedContent = {
+      ...content,
+    }
+
+    if (resource.content.json) {
+      updatedContent.raw = JSON.stringify(data.content.json)
+    }
+
+    setContent(updatedContent)
+  }, [data])
+
+  return (
+    <Section>
+      <Heading as="h1">{data.heading}</Heading>
+      {renderRichText(content)}
+    </Section>
+  )
+}
+```
+
 ### Further Examples
 
 For further examples see the [./examples](./examples/) directory.
