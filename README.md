@@ -489,7 +489,7 @@ That's it! You should now be able to use the Contentful live preview SDK with Ga
 
 To use with renderRichText you can listen to the changes made and then stringify the content to pass back in to `renderRichText`
 
-```
+```jsx
 export default function Hero({ contentful_id, ...props }) {
   import { renderRichText } from "gatsby-source-contentful/rich-text"
 
